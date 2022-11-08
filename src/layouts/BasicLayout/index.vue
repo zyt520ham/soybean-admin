@@ -1,35 +1,38 @@
 <template>
-  <admin-layout
-    :mode="mode"
-    :is-mobile="isMobile"
-    :fixed-header-and-tab="theme.fixedHeaderAndTab"
-    :header-height="theme.header.height"
-    :tab-visible="theme.tab.visible"
-    :tab-height="theme.tab.height"
-    :sider-visible="siderVisible"
-    :sider-width="siderWidth"
-    :sider-collapsed-width="siderCollapsedWidth"
-    :sider-collapse="app.siderCollapse"
-    :add-main-overflow-hidden="addMainOverflowHidden"
-    :fixed-footer="theme.footer.fixed"
-    @update:sider-collapse="app.setSiderCollapse"
-  >
-    <template #header>
-      <global-header v-bind="headerProps" />
-    </template>
-    <template #tab>
-      <global-tab />
-    </template>
-    <template #sider>
-      <global-sider />
-    </template>
-    <global-content @hide-main-overflow="setAddMainOverflowHidden" />
-    <template #footer>
-      <global-footer />
-    </template>
-  </admin-layout>
-  <global-back-top />
-  <setting-drawer />
+  <div class="admin-layout-parent">
+    <admin-layout
+      class="admin-layout"
+      :mode="mode"
+      :is-mobile="isMobile"
+      :fixed-header-and-tab="theme.fixedHeaderAndTab"
+      :header-height="theme.header.height"
+      :tab-visible="theme.tab.visible"
+      :tab-height="theme.tab.height"
+      :sider-visible="siderVisible"
+      :sider-width="siderWidth"
+      :sider-collapsed-width="siderCollapsedWidth"
+      :sider-collapse="app.siderCollapse"
+      :add-main-overflow-hidden="addMainOverflowHidden"
+      :fixed-footer="theme.footer.fixed"
+      @update:sider-collapse="app.setSiderCollapse"
+    >
+      <template #header>
+        <global-header v-bind="headerProps" />
+      </template>
+      <template #tab>
+        <global-tab />
+      </template>
+      <template #sider>
+        <global-sider />
+      </template>
+      <global-content @hide-main-overflow="setAddMainOverflowHidden" />
+      <template #footer>
+        <global-footer />
+      </template>
+    </admin-layout>
+    <global-back-top />
+    <setting-drawer />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -57,4 +60,14 @@ const { mode, isMobile, headerProps, siderVisible, siderWidth, siderCollapsedWid
 const { bool: addMainOverflowHidden, setBool: setAddMainOverflowHidden } = useBoolean();
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.admin-layout-parent {
+  width: 100%;
+  height: 100%;
+  .admin-layout {
+    .admin-layout__content {
+      overflow-y: hidden !important;
+    }
+  }
+}
+</style>

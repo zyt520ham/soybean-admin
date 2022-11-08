@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <n-card title="卡片" class="h-full shadow-sm rounded-16px">
-      <n-space :vertical="true">
+  <div class="wh-full card-cls">
+    <n-card   title="卡片" class="h-full shadow-sm  rounded-5px">
+      <n-space class="h-full overflow-hidden" :vertical="true">
         <n-card title="基本用法">
           <p class="pb-16px">基础卡片</p>
           <n-card title="卡片">卡片内容</n-card>
@@ -39,4 +39,9 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style lang="scss">
+.card-cls{
+	height: 100%;
+	overflow-y: hidden;
+}
+</style>

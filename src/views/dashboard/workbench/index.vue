@@ -1,8 +1,10 @@
 <template>
-  <n-space :vertical="true" :size="16">
-    <workbench-header />
-    <workbench-main />
-  </n-space>
+  <div class="wh-full">
+    <n-space :vertical="true" :size="16">
+      <workbench-header />
+      <workbench-main />
+    </n-space>
+  </div>
 </template>
 
 <script lang="ts" setup>

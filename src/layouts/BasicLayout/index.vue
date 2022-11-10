@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import AdminLayout from '@soybeanjs/vue-admin-layout';
+import AdminLayout from '@gz/vc-layout';
 import { useAppStore, useThemeStore } from '@/store';
 import { useBasicLayout } from '@/composables';
 import { useBoolean } from '@/hooks';

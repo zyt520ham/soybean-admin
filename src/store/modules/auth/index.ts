@@ -6,6 +6,7 @@ import { useRouterPush } from '@/composables';
 import { clearAuthStorage, getToken, getUserInfo, setRefreshToken, setToken, setUserInfo } from '@/utils';
 import { useTabStore } from '../tab';
 import { useRouteStore } from '../route';
+import {doLoginReq} from "@/service/useApi/authApi";
 
 interface AuthState {
   /** 用户信息 */
@@ -54,6 +55,9 @@ export const useAuthStore = defineStore('auth-store', {
       const { toLoginRedirect } = useRouterPush(false);
 
       const loginSuccess = await this.loginByToken(backendToken);
+			const tempRes = await doLoginReq();
+
+			loginSuccess = undefined;
 
       if (loginSuccess) {
         // 跳转登录后的地址

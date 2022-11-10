@@ -1,40 +1,20 @@
 {
-  "name": "soybean-admin",
-  "version": "0.9.7",
-  "description": "A fresh and elegant admin template, based on Vue3、Vite3、TypeScript、NaiveUI and UnoCSS. 一个基于Vue3、Vite3、TypeScript、NaiveUI and UnoCSS的清新优雅的中后台模版。",
-  "author": {
-    "name": "Soybean",
-    "email": "honghuangdc@gmail.com",
-    "url": "https://github.com/honghuangdc"
-  },
+  "name": "base-admin",
+  "version": "1.0.0",
+  "description": "基础admin",
   "license": "MIT",
-  "homepage": "https://github.com/honghuangdc/soybean-admin",
-  "repository": {
-    "url": "https://github.com/honghuangdc/soybean-admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/honghuangdc/soybean-admin/issues"
-  },
   "keywords": [
-    "Vue",
-    "Vue3",
+     "Vue3",
     "admin",
-    "admin-template",
-    "vue-admin",
-    "vue-admin-template",
     "Vite3",
-    "Vite",
-    "vite-admin",
     "TypeScript",
-    "TS",
-    "NaiveUI",
     "naive-ui",
-    "naive-admin",
-    "NaiveUI-Admin",
-    "naive-ui-admin",
     "UnoCSS"
   ],
   "scripts": {
+		"bootstrap": "pnpm install --filter base-admin",
+		"clean:cache": "rimraf ./node_modules/.cache/ && rimraf node_modules/.vite",
+		"clean:nodelib": "rimraf ./node_modules",
     "dev": "cross-env VITE_SERVICE_ENV=dev vite",
     "dev:test": "cross-env VITE_SERVICE_ENV=test vite",
     "dev:prod": "cross-env VITE_SERVICE_ENV=prod vite",
@@ -51,8 +31,7 @@
     "cleanup": "esno ./scripts/cleanup.ts",
     "update-pkg": "ncu --deep -u",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "standard-version",
-    "prepare": "husky install"
+    "release": "standard-version"
   },
   "dependencies": {
     "@antv/data-set": "^0.11.8",

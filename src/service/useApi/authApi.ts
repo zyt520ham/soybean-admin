@@ -6,5 +6,5 @@ export function doLoginReq(userName: string, password: string) {
 }
 
 export function doGetLoginUserInfo(vUserId: string | number) {
-  return doBaseApiRequest<ApiAuth.IRespUserInfo>('/auth/loginuserinfo', { userId: `${vUserId}` }, {});
+  return doBaseApiRequest<ApiRoute.Route>('/auth/loginuserinfo', { userId: `${vUserId}` }, {});
 }

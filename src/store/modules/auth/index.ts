@@ -77,12 +77,12 @@ export const useAuthStore = defineStore('auth-store', {
      * @param backendToken - 返回的token
      */
     async loginByToken(backendToken: ApiAuth.ILoginData) {
-      const successFlag = false;
+      let successFlag = false;
 
       // 先把token存储到缓存中(后面接口的请求头需要token)
       const { access_token } = backendToken;
       // setToken(access_token);
-      // setRefreshToken('');
+      //
       //   // 更新状态
 
       this.token = access_token;
@@ -90,14 +90,14 @@ export const useAuthStore = defineStore('auth-store', {
       // 获取用户信息
       const data = await doGetLoginUserInfo(backendToken.user_id);
       //
-      // if (data) {
-      //   // 成功后把用户信息存储到缓存中
-      //   setUserInfo(data);
-      //
-      this.userInfo = data;
-      //
-      //   successFlag = true;
-      // }
+      if (data) {
+        // 成功后把用户信息存储到缓存中
+        this.userInfo = data;
+        setUserInfo(data);
+        setToken(access_token);
+        setRefreshToken('');
+        successFlag = true;
+      }
 
       return successFlag;
     },

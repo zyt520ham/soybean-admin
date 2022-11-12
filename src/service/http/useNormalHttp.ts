@@ -18,22 +18,23 @@ import type {
   AxiosError
 } from '@gz/network';
 import { defaultsDeep } from 'lodash-es';
-// import { commomUtils } from '@gz/shared';
-import qs from 'qs';
 import { getToken } from '@/utils';
 // import { useRGApiHelper } from '../utils/useRGApiHelper';
 
 /** 参数格式整理 授权header处理 */
 const currentTransform: IAxiosTransform = defaultsDeep({}, networkUtils.transform);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 currentTransform.requestInterceptors = (config: AxiosRequestConfig, options: CreateAxiosOptions) => {
-	config.headers["Content-Type"] = 'application/json';
-  config.headers.Authorization = getToken();
+  config.headers['Content-Type'] = 'application/json';
+  config.headers.Authorization = `Bearer ${getToken()}`;
   // config.data = qs.stringify(options.params);
+  // console.log('request headers', config.headers);
   return config;
 };
 currentTransform.requestInterceptorsCatch = (error: Error) => {
   console.log('request catch', error);
 };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 currentTransform.responseInterceptorsCatch = (axiosInstance: AxiosResponse, error: AxiosError) => {
   console.error('response Interceptors Catch:', error);
   throw error;

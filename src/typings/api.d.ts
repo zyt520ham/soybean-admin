@@ -7,8 +7,15 @@ declare namespace ApiAuth {
     token: string;
     refreshToken: string;
   }
+  /** 登录返回 */
+  interface ILoginData {
+    access_token: string;
+    expires_in: string;
+		user_id:string;
+    [key: string]: any;
+  }
   /** 返回的用户信息 */
-  type UserInfo = Auth.UserInfo;
+  type IRespUserInfo = Auth.UserInfo;
 }
 
 /** 后端返回的路由相关类型 */

@@ -15,7 +15,7 @@
 		"bootstrap": "pnpm install --filter base-admin",
 		"clean:cache": "rimraf ./node_modules/.cache/ && rimraf node_modules/.vite",
 		"clean:nodelib": "rimraf ./node_modules",
-    "dev": "cross-env VITE_SERVICE_ENV=dev vite",
+    "baseadmin:dev": "cross-env VITE_SERVICE_ENV=dev vite",
     "dev:test": "cross-env VITE_SERVICE_ENV=test vite",
     "dev:prod": "cross-env VITE_SERVICE_ENV=prod vite",
     "build": "npm run typecheck && cross-env VITE_SERVICE_ENV=prod vite build",

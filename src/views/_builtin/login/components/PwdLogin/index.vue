@@ -21,28 +21,28 @@
       >
         确定
       </n-button>
-      <div class="flex-y-center justify-between">
-        <n-button class="flex-1" :block="true" @click="toLoginModule('code-login')">
-          {{ EnumLoginModule['code-login'] }}
-        </n-button>
-        <div class="w-12px"></div>
-        <n-button class="flex-1" :block="true" @click="toLoginModule('register')">
-          {{ EnumLoginModule.register }}
-        </n-button>
-      </div>
+      <!--      <div class="flex-y-center justify-between">-->
+      <!--        <n-button class="flex-1" :block="true" @click="toLoginModule('code-login')">-->
+      <!--          {{ EnumLoginModule['code-login'] }}-->
+      <!--        </n-button>-->
+      <!--        <div class="w-12px"></div>-->
+      <!--        <n-button class="flex-1" :block="true" @click="toLoginModule('register')">-->
+      <!--          {{ EnumLoginModule.register }}-->
+      <!--        </n-button>-->
+      <!--      </div>-->
     </n-space>
-    <other-account @login="handleLoginOtherAccount" />
+    <!--    <other-account @login="handleLoginOtherAccount" />-->
   </n-form>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import type { FormInst, FormRules } from 'naive-ui';
-import { EnumLoginModule } from '@/enum';
+
 import { useAuthStore } from '@/store';
 import { useRouterPush } from '@/composables';
 import { formRules } from '@/utils';
-import { OtherAccount } from './components';
+
 
 const auth = useAuthStore();
 const { login } = useAuthStore();
@@ -51,8 +51,8 @@ const { toLoginModule } = useRouterPush();
 const formRef = ref<HTMLElement & FormInst>();
 
 const model = reactive({
-  userName: 'Soybean',
-  password: 'soybean123'
+  userName: 'superAdmin',
+  password: '123456'
 });
 
 const rules: FormRules = {
@@ -66,13 +66,13 @@ async function handleSubmit() {
 
   const { userName, password } = model;
 
-  login(userName, password);
+   await login(userName, password);
 }
 
-function handleLoginOtherAccount(param: { userName: string; password: string }) {
-  const { userName, password } = param;
-  login(userName, password);
-}
+// function handleLoginOtherAccount(param: { userName: string; password: string }) {
+//   const { userName, password } = param;
+//   login(userName, password);
+// }
 </script>
 
 <style scoped></style>

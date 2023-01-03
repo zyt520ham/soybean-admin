@@ -1,6 +1,6 @@
 <template>
   <div class="wh-full card-cls">
-    <n-card   title="卡片" class="h-full shadow-sm  rounded-5px">
+    <n-card title="卡片" class="h-full shadow-sm rounded-5px">
       <n-space class="h-full overflow-hidden" :vertical="true">
         <n-card title="基本用法">
           <p class="pb-16px">基础卡片</p>
@@ -40,8 +40,8 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-.card-cls{
-	height: 100%;
-	overflow-y: hidden;
+.card-cls {
+  height: 100%;
+  overflow-y: hidden;
 }
 </style>

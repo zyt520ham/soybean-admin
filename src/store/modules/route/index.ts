@@ -2,16 +2,17 @@ import { defineStore } from 'pinia';
 import { ROOT_ROUTE, constantRoutes, router, routes as staticRoutes } from '@/router';
 import { fetchUserRoutes } from '@/service';
 import {
+  localStg,
   filterAuthRoutesByUserPermission,
   getCacheRoutes,
   getConstantRouteNames,
-  getUserInfo,
+  transformAuthRouteToVueRoutes,
+  transformAuthRouteToVueRoute,
   transformAuthRouteToMenu,
   transformAuthRouteToSearchMenus,
   transformRouteNameToRoutePath,
   transformRoutePathToRouteName
 } from '@/utils';
-import { transformAuthRouteToVueRoutes, transformAuthRouteToVueRoute } from '@/utils/router/transform';
 import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
 
@@ -105,37 +106,45 @@ export const useRouteStore = defineStore('route-store', {
     },
     /** 初始化动态路由 */
     async initDynamicRoute() {
-      const { userId } = getUserInfo();
-      const { data } = await fetchUserRoutes(userId);
-      if (data) {
+      const { initHomeTab } = useTabStore();
+
+      const { userId } = localStg.get('userInfo') || {};
+
+      if (!userId) {
+        throw new Error('userId 不能为空!');
+      }
+
+      const { error, data } = await fetchUserRoutes(userId);
+
+      if (!error) {
         this.routeHomeName = data.home;
         this.handleUpdateRootRedirect(data.home);
         this.handleAuthRoute(data.routes);
+
+        initHomeTab(data.home, router);
+
+        this.isInitAuthRoute = true;
       }
     },
     /** 初始化静态路由 */
     async initStaticRoute() {
+      const { initHomeTab } = useTabStore();
       const auth = useAuthStore();
+
       const routes = filterAuthRoutesByUserPermission(staticRoutes, auth.userInfo.userRole);
       this.handleAuthRoute(routes);
-    },
-    /** 初始化权限路由 */
-    async initAuthRoute() {
-      const { initHomeTab } = useTabStore();
-      const { userId } = getUserInfo();
-
-      if (!userId) return;
-
-      const isDynamicRoute = this.authRouteMode === 'dynamic';
-      if (isDynamicRoute) {
-        await this.initDynamicRoute();
-      } else {
-        await this.initStaticRoute();
-      }
 
       initHomeTab(this.routeHomeName, router);
 
       this.isInitAuthRoute = true;
+    },
+    /** 初始化权限路由 */
+    async initAuthRoute() {
+      if (this.authRouteMode === 'dynamic') {
+        await this.initDynamicRoute();
+      } else {
+        await this.initStaticRoute();
+      }
     }
   }
 });

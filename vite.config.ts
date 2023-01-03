@@ -16,7 +16,8 @@ export default defineConfig(configEnv => {
     resolve: {
       alias: {
         '~': rootPath,
-        '@': srcPath
+        '@': srcPath,
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
       }
     },
     define: viteDefine,
@@ -30,6 +31,7 @@ export default defineConfig(configEnv => {
     },
     server: {
       host: '0.0.0.0',
+      port: 3200,
       open: true,
       proxy: createViteProxy(isOpenProxy, envConfig)
     },

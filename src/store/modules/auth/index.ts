@@ -1,11 +1,12 @@
-import { unref } from 'vue';
+import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
 import { router } from '@/router';
 import { fetchLogin, fetchUserInfo } from '@/service';
 import { useRouterPush } from '@/composables';
-import { clearAuthStorage, getToken, getUserInfo, setRefreshToken, setToken, setUserInfo } from '@/utils';
+import { localStg } from '@/utils';
 import { useTabStore } from '../tab';
 import { useRouteStore } from '../route';
+import { getToken, getUserInfo, clearAuthStorage } from './helpers';
 
 interface AuthState {
   /** 用户信息 */
@@ -39,32 +40,39 @@ export const useAuthStore = defineStore('auth-store', {
       clearAuthStorage();
       this.$reset();
 
-      resetTabStore();
-      resetRouteStore();
-
       if (route.meta.requiresAuth) {
         toLogin();
       }
+
+      nextTick(() => {
+        resetTabStore();
+        resetRouteStore();
+      });
     },
     /**
      * 处理登录后成功或失败的逻辑
      * @param backendToken - 返回的token
      */
     async handleActionAfterLogin(backendToken: ApiAuth.Token) {
+      const route = useRouteStore();
       const { toLoginRedirect } = useRouterPush(false);
 
       const loginSuccess = await this.loginByToken(backendToken);
 
       if (loginSuccess) {
+        await route.initAuthRoute();
+
         // 跳转登录后的地址
         toLoginRedirect();
 
         // 登录成功弹出欢迎提示
-        window.$notification?.success({
-          title: '登录成功!',
-          content: `欢迎回来，${this.userInfo.userName}!`,
-          duration: 3000
-        });
+        if (route.isInitAuthRoute) {
+          window.$notification?.success({
+            title: '登录成功!',
+            content: `欢迎回来，${this.userInfo.userName}!`,
+            duration: 3000
+          });
+        }
 
         return;
       }
@@ -81,14 +89,14 @@ export const useAuthStore = defineStore('auth-store', {
 
       // 先把token存储到缓存中(后面接口的请求头需要token)
       const { token, refreshToken } = backendToken;
-      setToken(token);
-      setRefreshToken(refreshToken);
+      localStg.set('token', token);
+      localStg.set('refreshToken', refreshToken);
 
       // 获取用户信息
       const { data } = await fetchUserInfo();
       if (data) {
         // 成功后把用户信息存储到缓存中
-        setUserInfo(data);
+        localStg.set('userInfo', data);
 
         // 更新状态
         this.userInfo = data;

@@ -3,13 +3,13 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import unocss from '@unocss/vite';
 import progress from 'vite-plugin-progress';
-import pageRoute from '@soybeanjs/vite-plugin-vue-page-route';
 import html from './html';
 import unplugin from './unplugin';
 import mock from './mock';
 import visualizer from './visualizer';
 import compress from './compress';
 import pwa from './pwa';
+import pageRoute from './pageRoute';
 
 /**
  * vite插件

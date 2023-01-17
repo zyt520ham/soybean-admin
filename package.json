@@ -16,23 +16,6 @@
     "url": "https://github.com/honghuangdc/soybean-admin/issues"
   },
   "keywords": [
-    "Vue",
-    "Vue3",
-    "admin",
-    "admin-template",
-    "vue-admin",
-    "vue-admin-template",
-    "Vite3",
-    "Vite",
-    "vite-admin",
-    "TypeScript",
-    "TS",
-    "NaiveUI",
-    "naive-ui",
-    "naive-admin",
-    "NaiveUI-Admin",
-    "naive-ui-admin",
-    "UnoCSS"
   ],
   "scripts": {
     "dev": "cross-env VITE_SERVICE_ENV=dev vite",
@@ -42,7 +25,7 @@
     "build:dev": "npm run typecheck && cross-env VITE_SERVICE_ENV=dev vite build",
     "build:test": "npm run typecheck && cross-env VITE_SERVICE_ENV=test vite build",
     "build:vercel": "cross-env VITE_HASH_ROUTE=Y VITE_VERCEL=Y vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --port 5600",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "lint": "eslint . --fix",
     "commit": "czg",

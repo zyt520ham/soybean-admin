@@ -15,8 +15,7 @@
   "bugs": {
     "url": "https://github.com/honghuangdc/soybean-admin/issues"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "scripts": {
     "dev": "cross-env VITE_SERVICE_ENV=dev vite",
     "dev:test": "cross-env VITE_SERVICE_ENV=test vite",

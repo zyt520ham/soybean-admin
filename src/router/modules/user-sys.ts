@@ -9,6 +9,12 @@ const userSys: AuthRoute.Route = {
       path: '/user-sys/user-manager',
       component: 'self',
       meta: { title: 'user-sys_user-manager', icon: 'mdi:menu' }
+    },
+    {
+      name: 'user-sys_about',
+      path: '/user-sys/about',
+      component: 'self',
+      meta: { title: '复制的about', icon: 'mdi:menu', useCompName: 'about', keepAlive: true }
     }
   ]
 };

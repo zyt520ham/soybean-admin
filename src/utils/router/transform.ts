@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router';
-import { getLayoutComponent, getViewComponent } from './component';
+import { getLayoutComponent, getViewComponent, getViewComponent_v1 } from './component';
 
 /**
  * 将权限路由转换成vue路由
@@ -50,8 +50,8 @@ export function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
         }
       },
       self() {
-        itemRoute.component = getViewComponent(item.name as AuthRoute.LastDegreeRouteKey);
-      }
+        itemRoute.component = getViewComponent_v1(item.name as AuthRoute.LastDegreeRouteKey, item);
+      } //
     };
     try {
       if (item.component) {
@@ -153,6 +153,8 @@ export function transformRouteNameToRoutePath(name: Exclude<AuthRoute.AllRouteKe
 
 /** 将路由路径转换成路由名字 */
 export function transformRoutePathToRouteName<K extends AuthRoute.RoutePath>(path: K) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   if (path === '/') return 'root';
 
   const pathSplitMark = '/';

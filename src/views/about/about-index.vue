@@ -1,5 +1,6 @@
 <template>
   <n-space :vertical="true" :size="16">
+    <n-input></n-input>
     <project-introduction />
     <project-info />
     <pro-dependency />

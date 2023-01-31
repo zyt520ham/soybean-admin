@@ -33,6 +33,22 @@ export function getViewComponent(routeKey: AuthRoute.LastDegreeRouteKey) {
   }
   return setViewComponentName(views[routeKey], routeKey);
 }
+/**
+ * 获取页面导入的vue文件
+ * @param routeKey - 路由key
+ */
+export function getViewComponent_v1(routeKey: AuthRoute.LastDegreeRouteKey, route: AuthRoute.Route) {
+  if (!views[routeKey]) {
+    if (route.meta.useCompName) {
+      if (!views[route.meta.useCompName]) {
+        throw new Error(`路由“ 使用名称映射：${route.meta.useCompName}”没有对应的组件文件！`);
+      }
+      return setViewComponentName(views[route.meta.useCompName], routeKey);
+    }
+    throw new Error(`路由“${routeKey}”没有对应的组件文件！`);
+  }
+  return setViewComponentName(views[routeKey], routeKey);
+}
 
 /** 给页面组件设置名称 */
 function setViewComponentName(component: RouteComponent | Lazy<ModuleComponent>, name: string) {

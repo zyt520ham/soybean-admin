@@ -12,8 +12,9 @@ declare namespace AuthRoute {
   type RouteKey = PageRoute.RouteKey;
 
   type LastDegreeRouteKey = PageRoute.LastDegreeRouteKey;
-
-  type AllRouteKey = RouteKey | RootRouteKey | NotFoundRouteKey;
+  /** 自定义菜单路由path（多用于使用重复component） */
+  type CustomMenuPath = string;
+  type AllRouteKey = RouteKey | RootRouteKey | NotFoundRouteKey | CustomMenuPath;
 
   /** 路由路径 */
   type RoutePath<K extends AllRouteKey = AllRouteKey> = AuthRouteUtils.GetRoutePath<K>;
@@ -62,12 +63,14 @@ declare namespace AuthRoute {
     multi?: boolean;
     /** 是否固定在tab卡不可关闭  */
     affix?: boolean;
+
+    useCompName?: LastDegreeRouteKey;
   }
 
   type Route<K extends AllRouteKey = AllRouteKey> = K extends AllRouteKey
     ? {
         /** 路由名称(路由唯一标识) */
-        name: K;
+        name: K | string;
         /** 路由路径 */
         path: AuthRouteUtils.GetRoutePath<K>;
         /** 路由重定向 */

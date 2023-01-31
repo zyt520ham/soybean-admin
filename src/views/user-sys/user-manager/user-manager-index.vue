@@ -1,5 +1,7 @@
-<template>user mg</template>
-<template lang="ts" setup></template>
+<template>
+  <div>user mg</div>
+</template>
+<script lang="ts" setup></script>
 <script lang="ts">
 export default {
   name: 'UserManagerIndex'

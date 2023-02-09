@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://i.loli.net/2021/11/24/x5lLfuSnEawBAgi.png"/>
+	<img src="./public/logo.png" style="width: 240px;"/>
 	<h1>Soybean Admin</h1>
 </div>
 
@@ -11,12 +11,12 @@
 
 ## 特性
 
-- **最新技术栈**：使用 Vue3/Vite3 等前端前沿技术开发, 使用高效率的 npm 包管理器 pnpm
-- **TypeScript**：应用程序级 JavaScript 的语言
-- **主题**：丰富可配置的主题、暗黑模式，基于原子 css 框架 - UnoCSS 的动态主题颜色
+- **最新技术栈**：使用 Vue3/vite2 等前端前沿技术开发, 使用高效率的 npm 包管理器 pnpm
+- **TypeScript**: 应用程序级 JavaScript 的语言
+- **主题**：丰富可配置的主题、暗黑模式，基于原子 css 框架 - UnoCss 的动态主题颜色
 - **代码规范**：丰富的规范插件及极高的代码规范
-- **权限路由**：简易的路由配置、基于 mock 的动态路由能快速实现后端动态路由
-- **请求函数**：基于 axios 的完善的请求函数封装，提供 Promise 和 hooks 两种请求函数，加入请求结果数据转换的适配器
+- **权限路由**：基于文件的路由系统、基于 mock 的动态路由能快速实现后端动态路由
+- **请求函数**：基于 axios 的完善的请求函数封装，提供 Promise 和 hooks 两种请求函数，加入请求结果数据转换的适配器适配器
 
 ## 预览
 
@@ -29,7 +29,11 @@
 ## 代码仓库
 
 - [github](https://github.com/honghuangdc/soybean-admin)
+- [tauri 版](https://github.com/honghuangdc/soybean-admin/tree/tauri)
+- [精简版](https://github.com/honghuangdc/soybean-admin/tree/thin)
 - [gitee](https://gitee.com/honghuangdc/soybean-admin)
+- [tauri 版](https://gitee.com/honghuangdc/soybean-admin/tree/tauri)
+- [精简版](https://gitee.com/honghuangdc/soybean-admin/tree/thin)
 
 ## 更新日志
 
@@ -37,9 +41,8 @@
 
 ## 后端服务
 
-- [soybean-admin-java(开发中)](https://github.com/honghuangdc/soybean-admin-java)
-- [soybean-admin-go(开发中)](https://github.com/honghuangdc/soybean-admin-go)
-- [soybean-admin-nestjs(开发中)](https://github.com/honghuangdc/soybean-admin-nestjs)
+- [soybean-admin-java](https://github.com/honghuangdc/soybean-admin-java)
+- [soybean-admin-go](https://github.com/honghuangdc/soybean-admin-go)
 
 ## 项目示例图
 
@@ -112,13 +115,9 @@ docker run --name soybean -p 80:80 -d soybeanjs/soybean-admin:v0.9.6
 
 ## Git 贡献提交规范
 
-项目已经内置 angular 提交规范，通过 git cz 代替 git commit 命令即可。
+项目已经内置 angular 提交规范，直接执行 commit 命令即可。
 
-git cz 命令需要全局安装 commitizen
-
-```bash
-pnpm i -g commitizen
-```
+项目已用 simple-git-hooks 代替了 husky, 旧版本用了 husky，执行 pnpm soy init-git-hooks 进行初始化配置
 
 ## 浏览器支持
 

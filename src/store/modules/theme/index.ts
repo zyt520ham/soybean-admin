@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { darkTheme } from 'naive-ui';
-import { clearThemeSettings, getNaiveThemeOverrides, initThemeSettings, setThemeSettings } from './helpers';
+import { localStg } from '@/utils';
+import { getNaiveThemeOverrides, initThemeSettings } from './helpers';
 
 type ThemeState = Theme.Setting;
 
@@ -24,14 +25,14 @@ export const useThemeStore = defineStore('theme-store', {
   actions: {
     /** 重置theme状态 */
     resetThemeStore() {
-      clearThemeSettings();
+      localStg.remove('themeSettings');
       this.$reset();
     },
     /** 缓存主题配置 */
     cacheThemeSettings() {
       const isProd = import.meta.env.PROD;
       if (isProd) {
-        setThemeSettings(this.$state);
+        localStg.set('themeSettings', this.$state);
       }
     },
     /** 设置暗黑模式 */
@@ -147,6 +148,10 @@ export const useThemeStore = defineStore('theme-store', {
     /** 设置底部高度 */
     setFooterHeight(height: number) {
       this.footer.height = height;
+    },
+    /** 设置底部是否显示 */
+    setFooterVisible(isVisible: boolean) {
+      this.footer.visible = isVisible;
     },
     /** 设置切换页面时是否过渡动画 */
     setPageIsAnimate(animate: boolean) {

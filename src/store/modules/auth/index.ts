@@ -1,4 +1,4 @@
-import { unref } from 'vue';
+import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
 import { router } from '@/router';
 import { useRouterPush } from '@/composables';
@@ -6,6 +6,7 @@ import { clearAuthStorage, getToken, getUserInfo, setRefreshToken, setToken, set
 import { doLoginReq, doGetLoginUserInfo } from '@/service/useApi/authApi';
 import { useTabStore } from '../tab';
 import { useRouteStore } from '../route';
+import { getToken, getUserInfo, clearAuthStorage } from './helpers';
 
 interface AuthState {
   /** 用户信息 */
@@ -39,32 +40,39 @@ export const useAuthStore = defineStore('auth-store', {
       clearAuthStorage();
       this.$reset();
 
-      resetTabStore();
-      resetRouteStore();
-
       if (route.meta.requiresAuth) {
         toLogin();
       }
+
+      nextTick(() => {
+        resetTabStore();
+        resetRouteStore();
+      });
     },
     /**
      * 处理登录后成功或失败的逻辑
      * @param backendToken - 返回的token
      */
+
     async handleActionAfterLogin(backendToken: ApiAuth.ILoginData) {
       const { toLoginRedirect } = useRouterPush(false);
 
       const loginSuccess = await this.loginByToken(backendToken);
 
       if (loginSuccess) {
+        await route.initAuthRoute();
+
         // 跳转登录后的地址
         toLoginRedirect();
 
         // 登录成功弹出欢迎提示
-        window.$notification?.success({
-          title: '登录成功!',
-          content: `欢迎回来，${this.userInfo.userName}!`,
-          duration: 3000
-        });
+        if (route.isInitAuthRoute) {
+          window.$notification?.success({
+            title: '登录成功!',
+            content: `欢迎回来，${this.userInfo.userName}!`,
+            duration: 3000
+          });
+        }
 
         return;
       }
@@ -80,6 +88,7 @@ export const useAuthStore = defineStore('auth-store', {
       let successFlag = false;
 
       // 先把token存储到缓存中(后面接口的请求头需要token)
+
       const { access_token } = backendToken;
       // setToken(access_token);
       //
@@ -92,6 +101,7 @@ export const useAuthStore = defineStore('auth-store', {
       //
       if (data) {
         // 成功后把用户信息存储到缓存中
+
         this.userInfo = data;
         setUserInfo(data);
         setToken(access_token);

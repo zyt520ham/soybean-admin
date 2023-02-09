@@ -1,6 +1,7 @@
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router';
 import { defineStore } from 'pinia';
 import { useRouterPush } from '@/composables';
+import { localStg } from '@/utils';
 import { useThemeStore } from '../theme';
 import {
   clearTabRoutes,
@@ -8,8 +9,7 @@ import {
   getIndexInTabRoutesByRouteName,
   getTabRouteByVueRoute,
   getTabRoutes,
-  isInTabRoutes,
-  setTabRoutes
+  isInTabRoutes
 } from './helpers';
 
 interface TabState {
@@ -52,7 +52,7 @@ export const useTabStore = defineStore('tab-store', {
     },
     /** 缓存页签路由数据 */
     cacheTabRoutes() {
-      setTabRoutes(this.tabs);
+      localStg.set('multiTabRoutes', this.tabs);
     },
     /**
      * 设置当前路由对应的页签为激活状态
@@ -114,34 +114,42 @@ export const useTabStore = defineStore('tab-store', {
      * 删除多页签
      * @param fullPath - 路由fullPath
      */
-    removeTab(fullPath: string) {
+    async removeTab(fullPath: string) {
       const { routerPush } = useRouterPush(false);
 
       const isActive = this.activeTab === fullPath;
       const updateTabs = this.tabs.filter(tab => tab.fullPath !== fullPath);
-      this.tabs = updateTabs;
+      if (!isActive) {
+        this.tabs = updateTabs;
+      }
       if (isActive && updateTabs.length) {
         const activePath = updateTabs[updateTabs.length - 1].fullPath;
-        this.setActiveTab(activePath);
-        routerPush(activePath);
+        const navigationFailure = await routerPush(activePath);
+        if (!navigationFailure) {
+          this.tabs = updateTabs;
+          this.setActiveTab(activePath);
+        }
       }
     },
     /**
      * 清空多页签(多页签首页保留)
      * @param excludes - 保留的多页签path
      */
-    clearTab(excludes: string[] = []) {
+    async clearTab(excludes: string[] = []) {
       const { routerPush } = useRouterPush(false);
 
       const homePath = this.homeTab.fullPath;
       const remain = [homePath, ...excludes];
       const hasActive = remain.includes(this.activeTab);
       const updateTabs = this.tabs.filter(tab => remain.includes(tab.fullPath));
-      this.tabs = updateTabs;
+      if (hasActive) this.tabs = updateTabs;
       if (!hasActive && updateTabs.length) {
         const activePath = updateTabs[updateTabs.length - 1].fullPath;
-        this.setActiveTab(activePath);
-        routerPush(activePath);
+        const navigationFailure = await routerPush(activePath);
+        if (!navigationFailure) {
+          this.tabs = updateTabs;
+          this.setActiveTab(activePath);
+        }
       }
     },
     /**
@@ -174,13 +182,13 @@ export const useTabStore = defineStore('tab-store', {
      * 点击单个tab
      * @param fullPath - 路由fullPath
      */
-    handleClickTab(fullPath: string) {
+    async handleClickTab(fullPath: string) {
       const { routerPush } = useRouterPush(false);
 
       const isActive = this.activeTab === fullPath;
       if (!isActive) {
-        this.setActiveTab(fullPath);
-        routerPush(fullPath);
+        const navigationFailure = await routerPush(fullPath);
+        if (!navigationFailure) this.setActiveTab(fullPath);
       }
     },
     /**

@@ -11,6 +11,7 @@ node_modules
 .DS_Store
 dist
 dist-ssr
+dist.zip
 coverage
 *.local
 stats.html
@@ -21,6 +22,7 @@ stats.html
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
 !.vscode/settings.json
 .idea
 *.suo
@@ -30,6 +32,5 @@ stats.html
 *.sw?
 
 /src/typings/components.d.ts
-/src/typings/router-page.d.ts
 package-lock.json
 yarn.lock

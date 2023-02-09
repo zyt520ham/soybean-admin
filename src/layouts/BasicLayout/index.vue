@@ -10,8 +10,8 @@
     :sider-width="siderWidth"
     :sider-collapsed-width="siderCollapsedWidth"
     :sider-collapse="app.siderCollapse"
-    :add-main-overflow-hidden="addMainOverflowHidden"
     :fixed-footer="theme.footer.fixed"
+    :footer-visible="theme.footer.visible"
     @update:sider-collapse="app.setSiderCollapse"
   >
     <template #header>
@@ -23,7 +23,7 @@
     <template #sider>
       <global-sider />
     </template>
-    <global-content @hide-main-overflow="setAddMainOverflowHidden" />
+    <global-content />
     <template #footer>
       <global-footer />
     </template>
@@ -36,7 +36,6 @@
 import AdminLayout from '@gz/vc-layout';
 import { useAppStore, useThemeStore } from '@/store';
 import { useBasicLayout } from '@/composables';
-import { useBoolean } from '@/hooks';
 import {
   GlobalBackTop,
   GlobalContent,
@@ -53,8 +52,6 @@ const app = useAppStore();
 const theme = useThemeStore();
 
 const { mode, isMobile, headerProps, siderVisible, siderWidth, siderCollapsedWidth } = useBasicLayout();
-
-const { bool: addMainOverflowHidden, setBool: setAddMainOverflowHidden } = useBoolean();
 </script>
 
 <style scoped></style>

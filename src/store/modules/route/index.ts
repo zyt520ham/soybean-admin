@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia';
 import { ROOT_ROUTE, constantRoutes, router, routes as staticRoutes } from '@/router';
 import {
+  localStg,
   filterAuthRoutesByUserPermission,
   getCacheRoutes,
   getConstantRouteNames,
-  getUserInfo,
   transformAuthRouteToVueRoutes,
   transformAuthRouteToVueRoute,
   transformAuthRouteToMenu,
   transformAuthRouteToSearchMenus,
   transformRouteNameToRoutePath,
-  transformRoutePathToRouteName
+  transformRoutePathToRouteName,
+  sortRoutes
 } from '@/utils';
 import { doGetUserRoutesList } from '@/service/useApi/routesApi';
 import { useAuthStore } from '../auth';
@@ -111,32 +112,32 @@ export const useRouteStore = defineStore('route-store', {
       if (data) {
         this.routeHomeName = data.home;
         this.handleUpdateRootRedirect(data.home);
-        this.handleAuthRoute(data.routes);
+        this.handleAuthRoute(sortRoutes(data.routes));
+
+        initHomeTab(data.home, router);
+
+        this.isInitAuthRoute = true;
       }
     },
     /** 初始化静态路由 */
     async initStaticRoute() {
+      const { initHomeTab } = useTabStore();
       const auth = useAuthStore();
+
       const routes = filterAuthRoutesByUserPermission(staticRoutes, auth.userInfo.userRole);
       this.handleAuthRoute(routes);
-    },
-    /** 初始化权限路由 */
-    async initAuthRoute() {
-      const { initHomeTab } = useTabStore();
-      const { userId } = getUserInfo();
-
-      if (!userId) return;
-
-      const isDynamicRoute = this.authRouteMode === 'dynamic';
-      if (isDynamicRoute) {
-        await this.initDynamicRoute();
-      } else {
-        await this.initStaticRoute();
-      }
 
       initHomeTab(this.routeHomeName, router);
 
       this.isInitAuthRoute = true;
+    },
+    /** 初始化权限路由 */
+    async initAuthRoute() {
+      if (this.authRouteMode === 'dynamic') {
+        await this.initDynamicRoute();
+      } else {
+        await this.initStaticRoute();
+      }
     }
   }
 });

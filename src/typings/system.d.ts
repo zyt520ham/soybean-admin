@@ -1,24 +1,3 @@
-/** 枚举的key类型 */
-declare namespace EnumType {
-  /** 布局组件名称 */
-  type LayoutComponentName = keyof typeof import('@/enum').EnumLayoutComponentName;
-
-  /** 布局模式 */
-  type ThemeLayoutMode = keyof typeof import('@/enum').EnumThemeLayoutMode;
-
-  /** 多页签风格 */
-  type ThemeTabMode = keyof typeof import('@/enum').EnumThemeTabMode;
-
-  /** 水平模式的菜单位置 */
-  type ThemeHorizontalMenuPosition = keyof typeof import('@/enum').EnumThemeHorizontalMenuPosition;
-
-  /** 过渡动画 */
-  type ThemeAnimateMode = keyof typeof import('@/enum').EnumThemeAnimateMode;
-
-  /** 登录模块 */
-  type LoginModuleKey = keyof typeof import('@/enum').EnumLoginModule;
-}
-
 /** 请求的相关类型 */
 declare namespace Service {
   /**
@@ -113,6 +92,10 @@ declare namespace Theme {
     followSystemTheme: boolean;
     /** 布局样式 */
     layout: Layout;
+    /** 滚动模式 */
+    scrollMode: UnionKey.ThemeScrollMode;
+    /** 滚动模式列表 */
+    scrollModeList: Common.OptionWithKey<UnionKey.ThemeScrollMode>[];
     /** 主题颜色 */
     themeColor: string;
     /** 主题颜色列表 */
@@ -143,13 +126,9 @@ declare namespace Theme {
     /** 最小宽度 */
     minWidth: number;
     /** 布局模式 */
-    mode: EnumType.ThemeLayoutMode;
+    mode: UnionKey.ThemeLayoutMode;
     /** 布局模式列表 */
-    modeList: LayoutModeList[];
-  }
-  interface LayoutModeList {
-    value: EnumType.ThemeLayoutMode;
-    label: import('@/enum').EnumThemeLayoutMode;
+    modeList: Common.OptionWithKey<UnionKey.ThemeLayoutMode>[];
   }
 
   /** 其他主题颜色 */
@@ -188,17 +167,11 @@ declare namespace Theme {
     /** 多页签高度 */
     height: number;
     /** 多页签风格 */
-    mode: EnumType.ThemeTabMode;
+    mode: UnionKey.ThemeTabMode;
     /** 多页签风格列表 */
-    modeList: ThemeTabModeList[];
+    modeList: Common.OptionWithKey<UnionKey.ThemeTabMode>[];
     /** 开启多页签缓存 */
     isCache: boolean;
-  }
-
-  /** 多页签风格列表 */
-  interface ThemeTabModeList {
-    value: EnumType.ThemeTabMode;
-    label: import('@/enum').EnumThemeTabMode;
   }
 
   /** 侧边栏样式 */
@@ -220,24 +193,23 @@ declare namespace Theme {
   /** 菜单样式 */
   interface Menu {
     /** 水平模式的菜单的位置 */
-    horizontalPosition: EnumType.ThemeHorizontalMenuPosition;
+    horizontalPosition: UnionKey.ThemeHorizontalMenuPosition;
     /** 水平模式的菜单的位置列表 */
-    horizontalPositionList: HorizontalMenuPositionList[];
-  }
-  /** 水平模式的菜单的位置列表 */
-  interface HorizontalMenuPositionList {
-    value: EnumType.ThemeHorizontalMenuPosition;
-    label: import('@/enum').EnumThemeHorizontalMenuPosition;
+    horizontalPositionList: Common.OptionWithKey<UnionKey.ThemeHorizontalMenuPosition>[];
   }
 
   /** 底部样式 */
   interface Footer {
-    /** 是否固定底部 */
-    fixed: boolean;
-    /** 底部高度 */
-    height: number;
     /* 底部是否可见 */
     visible: boolean;
+    /** 是否固定底部 */
+    fixed: boolean;
+    /** 底部是否居右(顶部混合菜单模式有效) */
+    right: boolean;
+    /** 底部高度 */
+    height: number;
+    /** 底部反转色 */
+    inverted: boolean;
   }
 
   /** 页面样式 */
@@ -245,14 +217,9 @@ declare namespace Theme {
     /** 页面是否开启动画 */
     animate: boolean;
     /** 动画类型 */
-    animateMode: EnumType.ThemeAnimateMode;
+    animateMode: UnionKey.ThemeAnimateMode;
     /** 动画类型列表 */
-    animateModeList: AnimateModeList[];
-  }
-  /** 动画类型列表 */
-  interface AnimateModeList {
-    value: EnumType.ThemeAnimateMode;
-    label: import('@/enum').EnumThemeAnimateMode;
+    animateModeList: Common.OptionWithKey<UnionKey.ThemeAnimateMode>[];
   }
 }
 

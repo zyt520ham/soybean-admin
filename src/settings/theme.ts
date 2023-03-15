@@ -1,4 +1,10 @@
-import { EnumThemeAnimateMode, EnumThemeHorizontalMenuPosition, EnumThemeLayoutMode, EnumThemeTabMode } from '@/enum';
+import {
+  themeLayoutModeOptions,
+  themeScrollModeOptions,
+  themeTabModeOptions,
+  themeHorizontalMenuPositionOptions,
+  themeAnimateModeOptions
+} from '@/constants';
 import jsonSetting from './theme.json';
 
 const themeColorList = [
@@ -34,13 +40,10 @@ const defaultThemeSetting: Theme.Setting = {
   layout: {
     minWidth: 900,
     mode: 'vertical',
-    modeList: [
-      { value: 'vertical', label: EnumThemeLayoutMode.vertical },
-      { value: 'vertical-mix', label: EnumThemeLayoutMode['vertical-mix'] },
-      { value: 'horizontal', label: EnumThemeLayoutMode.horizontal },
-      { value: 'horizontal-mix', label: EnumThemeLayoutMode['horizontal-mix'] }
-    ]
+    modeList: themeLayoutModeOptions
   },
+  scrollMode: 'content',
+  scrollModeList: themeScrollModeOptions,
   themeColor: themeColorList[0],
   themeColorList,
   otherColor: {
@@ -64,10 +67,7 @@ const defaultThemeSetting: Theme.Setting = {
     visible: true,
     height: 44,
     mode: 'chrome',
-    modeList: [
-      { value: 'chrome', label: EnumThemeTabMode.chrome },
-      { value: 'button', label: EnumThemeTabMode.button }
-    ],
+    modeList: themeTabModeOptions,
     isCache: true
   },
   sider: {
@@ -80,28 +80,19 @@ const defaultThemeSetting: Theme.Setting = {
   },
   menu: {
     horizontalPosition: 'flex-start',
-    horizontalPositionList: [
-      { value: 'flex-start', label: EnumThemeHorizontalMenuPosition['flex-start'] },
-      { value: 'center', label: EnumThemeHorizontalMenuPosition.center },
-      { value: 'flex-end', label: EnumThemeHorizontalMenuPosition['flex-end'] }
-    ]
+    horizontalPositionList: themeHorizontalMenuPositionOptions
   },
   footer: {
+    visible: true,
     fixed: false,
+    right: true,
     height: 48,
-    visible: true
+    inverted: false
   },
   page: {
     animate: true,
     animateMode: 'fade-slide',
-    animateModeList: [
-      { value: 'fade-slide', label: EnumThemeAnimateMode['fade-slide'] },
-      { value: 'fade', label: EnumThemeAnimateMode.fade },
-      { value: 'fade-bottom', label: EnumThemeAnimateMode['fade-bottom'] },
-      { value: 'fade-scale', label: EnumThemeAnimateMode['fade-scale'] },
-      { value: 'zoom-fade', label: EnumThemeAnimateMode['zoom-fade'] },
-      { value: 'zoom-out', label: EnumThemeAnimateMode['zoom-out'] }
-    ]
+    animateModeList: themeAnimateModeOptions
   }
 };
 

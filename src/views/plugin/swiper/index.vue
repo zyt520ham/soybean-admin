@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-card title="Swiper插件" class="shadow-sm rounded-16px">
+    <n-card title="Swiper插件" :bordered="false" class="rounded-8px shadow-sm">
       <n-space :vertical="true">
         <github-link link="https://github.com/nolimits4web/swiper" />
         <web-site-link label="vue3版文档地址：" link="https://swiperjs.com/vue" />
@@ -21,9 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import SwiperCore, { Navigation, Pagination } from 'swiper';
+import SwiperCore from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import type { SwiperOptions } from 'swiper';
+import type { SwiperOptions } from 'swiper/types';
 
 type SwiperExampleOptions = Pick<
   SwiperOptions,

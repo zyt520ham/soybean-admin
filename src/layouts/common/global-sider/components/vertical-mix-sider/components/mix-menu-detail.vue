@@ -6,7 +6,7 @@
     >
       <component :is="icon" :class="[isMini ? 'text-16px' : 'text-20px']" />
       <p
-        class="text-12px overflow-hidden transition-height duration-300 ease-in-out"
+        class="w-full text-center ellipsis-text text-12px transition-height duration-300 ease-in-out"
         :class="[isMini ? 'h-0 pt-0' : 'h-24px pt-4px']"
       >
         {{ label }}
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { VNodeChild } from 'vue';
+import type { Component } from 'vue';
 import { useBoolean } from '@/hooks';
 
 defineOptions({ name: 'MixMenuDetail' });
@@ -30,7 +30,7 @@ interface Props {
   /** 当前激活状态的理由名称 */
   activeRouteName: string;
   /** 路由图标 */
-  icon?: () => VNodeChild;
+  icon?: Component;
   /** mini尺寸的路由 */
   isMini?: boolean;
 }

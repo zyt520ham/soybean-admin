@@ -1,6 +1,6 @@
 <template>
   <div ref="tabRef" class="flex h-full pr-18px" :class="[isChromeMode ? 'items-end' : 'items-center gap-12px']">
-    <AdminTab
+    <PageTab
       v-for="item in tab.tabs"
       :key="item.fullPath"
       :mode="theme.tab.mode"
@@ -19,8 +19,8 @@
           class="inline-block align-text-bottom text-16px"
         />
       </template>
-      {{ item.meta.title }}
-    </AdminTab>
+      {{ item.meta.i18nTitle ? $t(item.meta.i18nTitle) : item.meta.title }}
+    </PageTab>
   </div>
   <context-menu
     :visible="dropdown.visible"
@@ -34,8 +34,9 @@
 
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, watch } from 'vue';
-import { AdminTab } from '@soybeanjs/vue-materials';
+import { PageTab } from '@soybeanjs/vue-materials';
 import { useTabStore, useThemeStore } from '@/store';
+import { $t } from '@/locales';
 import { ContextMenu } from './components';
 
 defineOptions({ name: 'TabDetail' });

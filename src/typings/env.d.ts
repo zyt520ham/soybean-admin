@@ -40,13 +40,13 @@ interface ImportMetaEnv {
   /** 路由首页的路径 */
   readonly VITE_ROUTE_HOME_PATH: AuthRoute.RoutePath;
   /** iconify图标作为组件的前缀 */
-  readonly VITE_ICON_PREFFIX: string;
+  readonly VITE_ICON_PREFIX: string;
   /**
-   * 本地SVG图标作为组件的前缀, 请注意一定要包含 VITE_ICON_PREFFIX
-   * - 格式 {VITE_ICON_PREFFIX}-{本地图标集合名称}
+   * 本地SVG图标作为组件的前缀, 请注意一定要包含 VITE_ICON_PREFIX
+   * - 格式 {VITE_ICON_PREFIX}-{本地图标集合名称}
    * - 例如：icon-local
    */
-  readonly VITE_ICON_LOCAL_PREFFIX: string;
+  readonly VITE_ICON_LOCAL_PREFIX: string;
   /** 后端服务的环境类型 */
   readonly VITE_SERVICE_ENV?: ServiceEnvType;
   /** 开启请求代理 */
@@ -59,8 +59,15 @@ interface ImportMetaEnv {
   readonly VITE_COMPRESS_TYPE?: 'gzip' | 'brotliCompress' | 'deflate' | 'deflateRaw';
   /** 是否应用pwa */
   readonly VITE_PWA?: 'Y' | 'N';
+  /**
+   * 是否开启生产模式下的mock
+   * @description 生产模式下会拦截XHR，导致无法获取response，不使用mock请求时设置为N
+   */
+  readonly VITE_PROD_MOCK?: 'Y' | 'N';
   /** hash路由模式 */
   readonly VITE_HASH_ROUTE?: 'Y' | 'N';
+  /** 是否应用自动生成路由的插件 */
+  readonly VITE_SOYBEAN_ROUTE_PLUGIN?: 'Y' | 'N';
   /** 是否是部署的vercel */
   readonly VITE_VERCEL?: 'Y' | 'N';
 }

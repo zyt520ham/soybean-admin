@@ -1,6 +1,7 @@
 import { nextTick } from 'vue';
 import { defineStore } from 'pinia';
-import { SCROLL_EL_ID } from '@soybeanjs/vue-materials';
+import type { Socket } from 'socket.io-client';
+import { LAYOUT_SCROLL_EL_ID } from '@soybeanjs/vue-materials';
 
 interface AppState {
   /** 滚动元素的id */
@@ -17,17 +18,20 @@ interface AppState {
   siderCollapse: boolean;
   /** vertical-mix模式下 侧边栏的固定状态 */
   mixSiderFixed: boolean;
+  /** socket.io 实例 */
+  socket: Socket | null;
 }
 
 export const useAppStore = defineStore('app-store', {
   state: (): AppState => ({
-    scrollElId: SCROLL_EL_ID,
+    scrollElId: LAYOUT_SCROLL_EL_ID,
     contentFull: false,
     disableMainXScroll: false,
     reloadFlag: true,
     settingDrawerVisible: false,
     siderCollapse: false,
-    mixSiderFixed: false
+    mixSiderFixed: false,
+    socket: null
   }),
   actions: {
     /**
@@ -97,6 +101,10 @@ export const useAppStore = defineStore('app-store', {
     /** 设置主体内容全屏 */
     setContentFull(full: boolean) {
       this.contentFull = full;
+    },
+    /** 设置socket实例 */
+    setSocket<T extends Socket = Socket>(socket: T) {
+      this.socket = socket;
     }
   }
 });

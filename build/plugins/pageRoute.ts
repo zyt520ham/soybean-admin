@@ -3,7 +3,13 @@ export default function pageRoute() {
   // return _pageRoute();
   return _pageRoute({
     pageDir: 'src/views', // 默认
-    pageGlobs: ['**/*.{vue,tsx,jsx}', '!**/components/**', '!**/inner/**'], // 默认
+    pageGlobs: [
+      '**/*.{vue,tsx,jsx}',
+      '**/*Vidx.{vue,tsx,jsx}',
+      '**/*.{vue,tsx,jsx}',
+      '!**/components/**',
+      '!**/inner/**'
+    ], // 默认
     routeDts: 'src/typings/page-route.d.ts', // 默认
     routeModuleDir: 'src/router/modules', // 默认
     routeModuleExt: 'ts', // 默认

@@ -11,7 +11,8 @@ const about: AuthRoute.Route = {
     permissions: ['super', 'admin', 'user'],
     icon: 'fluent:book-information-24-regular',
     order: 10
-  }
+  },
+  children: []
 };
 
 export default about;
